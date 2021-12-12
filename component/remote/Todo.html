@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Admin Panel</title>
+  <!-- Custom fonts for this template-->
+  <link href="../../img/ngo1.png" rel="icon">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/fontawesome-free/css/fontawesome.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+  <link href="../../vendor/bootstrap/js/bootstrap-colorpicker.css" rel="stylesheet" />
+  <link href="../../vendor/bootstrap/js/bootstrap-toggle.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/adminlte.css">
+  <link rel="stylesheet" href="../../css/remote_schedule.css">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.5/push.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-storage.js"></script>
+
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../../Dashboard/remote_cust.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3 " id="adminsection"> </div>
+      </a>
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="../../Dashboard/remote_cust.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Interface
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="../../Dashboard/remote_charts.html">Analysis charts</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../../component/remote/cust.html">
+          <i class="fas fa-users"></i>
+          <span>Volunteer Entry</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../../component/remote/cust_record.html">
+          <i class="fas fa-users"></i>
+          <span>Volunteer</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../../component/remote/Todo.html">
+          <i class="fa fa-calendar"></i>
+          <span>Scheduler</span></a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Addons
+      </div>
+      <!-- Navs Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Settings</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">forgot</h6>
+            <a class="collapse-item" href="../../login_system/forgot-password.html">Forgot Password</a>
+            <div class="collapse-divider"></div>
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="../../home.html" role="button" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-home" style="color: blue;"></i>
+              </a>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="admin"></span>
+                <img class="img-profile rounded-circle imgchange">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="../../component/profile_remote.html">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">if you are ready to end your current session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+                <form action="" method="POST" id="logform">
+                  <button type="submit" name="logout_btn" class="btn btn-primary">Logout</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Your Schedule</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="card">
+                  <div class="card-body">
+
+                    <form action="" method="POST" id="msForm" novalidate="">
+                      <label>Add Task Title</label>
+                      <div class="input-group">
+                        <input id="newevent" type="text" class="form-control new-event " placeholder="Event Title">
+                      </div>
+                      <br>
+                      <label>Task Description :</label>
+                      <div class="input-group">
+                        <textarea id="Description" class="form-control" rows="4">
+                    </textarea>
+                      </div>
+                      <br>
+                      <label>Current Date and Time :</label>
+                      <input type='text' class="form-control" id='Start_Date' disabled><br>
+                      <label>Start Date :</label>
+                      <input type='text' class="form-control" id='Start_Date1' placeholder='Start Date'><br>
+                      <label>End Date :</label>
+                      <input type='text' class="form-control" id='End_Date' placeholder='End Date'>
+                      <br>
+                      <!-- <label> Choose Task Color :</label>
+                    <div class="example-content-widget">
+                    <input id="Color" type="text" class="form-control"  />
+                  </div> -->
+                      <!-- <br> -->
+                      <button type="submit" id="add-new-event1" class="btn btn-primary" onclick="add_task();"
+                        id="btnSubmit">ADD</button>
+
+                    </form>
+
+                    <!-- /input-group -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- /.container-fluid -->
+        <div class="container-fluid">
+          <!-- Content Row -->
+          <div class="d-sm-flex align-items-center justify-content-between ">
+            <button type="submit" id="add-new-event1" class="btn btn-primary" data-toggle="modal"
+              data-target="#eventModal">Add Schedule</button>
+            <!-- <input type="checkbox"  data-toggle="toggle" data-on="Push On" data-off="Push Off" data-width="100"
+  data-onstyle="danger" data-offstyle="warning" id="toggle-event"> -->
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card shadow mb-4" style="margin-top: 10px;">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  Your Task :
+                </div>
+                <div class="card-body unfinish">
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card shadow mb-4" style="margin-top: 10px;">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  Finish Task :
+                </div>
+                <div class="card-body finish">
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End of Footer -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Main Content -->
+  </div>
+  <!-- End of Content Wrapper -->
+  </div>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- jQuery -->
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../../vendor/jquery-ui/jquery-ui.min.js"></script>
+  <script src="../../vendor/moment/moment.min.js"></script>
+  <script src="../../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap-colorpicker.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap-toggle.js"></script>
+  <script src="../../js/sb-admin-2.min.js"></script>
+  <script src="../../firebase/auth.js"></script>
+  <script src="../../firebase/login_system/logout.js"></script>
+  <script src="../../firebase/opration/remote_schedule.js"></script>
+  <script>
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+
+        if (user != null) {
+          var email = user.email;
+          $('.imgchange').attr('src', `https://joeschmoe.io/api/v1/${email}`);
+          const b = $('.imgchange');
+          console.log(b);
+          document.getElementById('admin').innerHTML = email;
+          var adminId = firebase.auth().currentUser.uid;
+          read(adminId);
+          create_unfinished_task(adminId);
+          create_finished_task(adminId);
+        }
+      } else {
+        window.location.replace("../../login_system/login.html");
+      }
+    });
+    function read(adminId) {
+      var task = firebase.database().ref('/admin/' + adminId + "/user/");
+      task.on("child_added", function (data) {
+        var taskvalue = data.val();
+        document.getElementById("adminsection").innerHTML += `
+    <div class="row">
+        <p style="color:white; margin-top:20px;"> ${taskvalue.orgname}</p>
+    </div>
+    `;
+      });
+    }
+    $('#Start_Date1').datepicker({
+      format: "dd-mm-yy",
+      startDate: '-1y ',
+      endDate: '+2m +10d'
+    });
+
+    $('#End_Date').datepicker({
+      format: "dd-mm-yy",
+      startDate: '-1m',
+      endDate: '+2m +10d'
+    });
+    $(function () {
+      $('#Color').colorpicker();
+    });
+//  $('#toggle-event').change(function() {
+//     var T = $(this).prop('checked');
+// if(true){
+
+//       Push.create("Reminder Please Complete Your Task within Time ", {
+//           icon: "../../img/ngo1.jpg",
+//           timeout: 5000,
+//           onClick: function() {
+//              window.focus();
+//              this.close(); 
+//           }
+//   })
+// }
+// else{
+
+// }
+// })
+  </script>
+</body>
+
+</html>

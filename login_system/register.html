@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Register</title>
+  <!-- Custom fonts for this template-->
+  <link href="../img/ngo1.png" rel="icon">
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- <link href="vendor/fontawesome-free/css/fontawesome.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../css/login_system/style.css" rel="stylesheet">
+  <link href="../vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../vendor/bootstrap/js/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-storage.js"></script>
+</head>
+
+<body id="page-top" style="background:url('../img/boxed-bg.png');">
+  <!-- popup with NGO Verification-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="../img/lock.jpg" alt="lock" style="width:100%; height:200px">
+          <p style="text-align: center; color:blue; " class="para11">Let us get started! In just a few minutes...
+          <p>
+          <p style="text-align: center; color:blue; " class="para1">
+            Are you registered as an NGO with the Government of India?
+          </p>
+          <form action="" method="POST" id="logform1">
+            <div class="container-fluid ">
+              <div class="row  ">
+                <div class="form-check">
+                  <div class="col-6">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                      value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      Yes
+                    </label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                      value="option2">
+                    <label class="form-check-label" for="exampleRadios2">
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="container-fluid">
+          <div id="dvPassport" class="alert alert-warning alert-dismissible fade show" role="alert"
+            style="display: none">
+            <p class="para">Sorry, only NGOs registered with the government of India can be a part of the Ngo Solution
+              ecosystem!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" class="nextbut" onclick="ShowHideDiv()">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--success modal-->
+  <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="form-card">
+            <h2 class="fs-title text-center">Success !</h2> <br><br>
+            <div class="row justify-content-center">
+              <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"> </div>
+            </div> <br><br>
+            <div class="row justify-content-center">
+              <div class="col-7 text-center">
+                <h5>You Have Successfully Signed Up</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button"><a style="color:white;" href="../index.html">Login</a></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Page Wrapper -->
+
+  <div id="wrapper">
+    <div class="container-fluid ">
+      <div class="row justify-content-center ">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2 ">
+          <div class="card px-0 pt-4 pb-0 mt-3 mb-3  ">
+            <div class="text-center">
+              <img src="../img/ngo.png" height="150px">
+            </div>
+            <br>
+            <p>Let's get started raising money for your NGO</p>
+            <form id="msform" novalidate="" method="post" action="index.html">
+              <!-- progressbar -->
+              <ul id="progressbar">
+                <li class="active" id="account"><strong>ACCOUNT</strong></li>
+                <li id="personal"><strong>AUTH</strong></li>
+                <li id="payment"><strong>UPLOAD</strong></li>
+                <li id="confirm"><strong>VERIFY</strong></li>
+              </ul>
+              <!-- <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+              </div> <br> fieldsets -->
+              <fieldset>
+                <div class="form-card" style="padding: 25px;">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="fs-title">BASIC</h2>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <label class="fieldlabels">Registration NO</label>
+                      <input type="text" id="regno" placeholder="Registration no" name="regno" disabled />
+                    </div>
+                    <div class="col-6">
+                      <label class="fieldlabels">Date and Time</label>
+                      <input type="text" id="date_time" name="date_time" disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="fieldlabels">Organization Name :*</label>
+                      <input type="text" name="orgname" placeholder="Organization Name" id="orgname"
+                        onblur="validate1(1)" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <label class="fieldlabels">Country :*</label>
+                      <select class="selectpicker custom-select countrypicker" name="country" id="country"
+                        data-live-search="true" required></select>
+
+                    </div>
+                    <div class="col-6">
+                      <label class="fieldlabels">City :*</label>
+                      <input type="text" name="city" placeholder="City" id="city" onblur="validate1(3)" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <label class="fieldlabels">state :*</label>
+                      <input type="text" name="state" placeholder="state" id="state" onblur="validate1(4)" />
+                    </div>
+                    <div class="col-6">
+                      <label class="fieldlabels">pincode :*</label>
+                      <input type="text" name="pincode" placeholder="pincode" id="pincode" onblur="validate1(5)" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="fieldlabels">short descrption:*</label>
+                      <textarea type="text" name="short" placeholder="short description " id="short"
+                        onblur="validate1(6)"></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="fieldlabels">Address:*</label>
+                      <textarea type="text" name="Address" placeholder="Address" id="Address"
+                        onblur="validate1(7)"></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="fieldlabels">cause: *</label>
+                      <input type="text" name="cause" placeholder="cause" id="cause" onblur="validate1(8)" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="fieldlabels">Enter Your Upi Id : *</label>
+                      <input type="text" name="upi_id" placeholder="Enter your upi id" id="upi_id"
+                        onblur="validate1(9)" />
+                    </div>
+                  </div>
+                </div>
+                <input type="button" name="next" class="next action-button " id="next1" onclick="validate1(0)"
+                  value="NEXT" style="margin-right: 15px;" />
+
+                <!-- <div class="row ">
+                      <div class="col-6">
+                        <p style="margin-top: 15px; margin-left:30px; text-align:left;"><a href="../login_system/login.html" style="color: purple;  text-decoration:none;">Login Here</a></p>
+                      </div>
+                      <div class="col-6"> 
+                      </div>
+                  </div> -->
+              </fieldset>
+              <fieldset>
+                <div class="form-card" style="padding: 25px;">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="fs-title">AUTH</h2>
+                    </div>
+                    <ul style="padding-left:20px ; color:red;">
+                      <li>At least six charcter</li>
+                      <li>At least one digit ([0-9]);</li>
+                      <li>At least one lowercase character</li>
+                      <li>At least one uppercase character</li>
+                      <li>At least one special charcter character</li>
+                    </ul>
+
+                  </div>
+                  <label class="fieldlabels">Email: *</label>
+                  <input type="email" name="email" placeholder="Email Id" id="email" onblur="validate2(1)" />
+                  <label class="fieldlabels">Password: *</label>
+                  <input type="password" name="pwd" placeholder="Password" id="pwd" onblur="validate2(2)" />
+                  <label class="fieldlabels">Confirm Password: *</label>
+                  <input type="password" name="cpwd" placeholder="Confirm Password" id="cpwd" onblur="validate2(3)" />
+                </div>
+                <input type="button" name="next" class="next action-button" style="margin-right: 15px;" value="NEXT"
+                  id="next2" />
+                <input type="button" name="previous" class="previous action-button-previous" value="PREVIOUS"
+                  style="margin-right: 15px;" />
+              </fieldset>
+              <fieldset>
+                <div class="form-card" style="padding: 25px;">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="fs-title">UPLAOD IMAGES</h2>
+                    </div>
+                    <ul style="padding-left:20px ; color:red;">
+                      <li>Image should be in jpeg , jpg , png format only.</li>
+                    </ul>
+                  </div>
+                  <label class="fieldlabels">Upload Your Photo:</label>
+                  <input type="file" name="pic1" accept="image/*" id="pic1" onblur="validate3(1)">
+                  <label class="fieldlabels">Upload NGO Photo:</label>
+                  <input type="file" name="pic2" accept="image/*" id="pic2" onblur="validate3(2)">
+                </div>
+                <input type="button" name="next" class="next action-button" value="NEXT" id="next3"
+                  style="margin-right: 15px;" />
+                <input type="button" name="previous" class="previous action-button-previous" value="PREVIOUS"
+                  style="margin-right: 15px;" />
+              </fieldset>
+              <fieldset>
+                <div class="form-card" style="padding: 25px;">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="fs-title">VERIFICATION</h2>
+                    </div>
+                  </div>
+                  <label class="fieldlabels">Enter Phone NO :*</label>
+                  <input type="text" name="phone" id="phone" onblur="validate4(1)" placeholder="+923********">
+                  <div id="recaptcha-container"></div>
+                  <button type="button" onclick="phoneAuth();" class="btn1" id="open">OTP</button>
+                  <div id="codephone" style="display: none">
+                    <input type="text" name="phone" id="phone1" onblur="validate4(1)" placeholder="OTP CODE">
+                    <button type="button" onclick="codeverify();" class="btn1">VERIFY</button>
+                  </div>
+                </div>
+                <button name="next" class="action-button login btn" value="Submit" style="margin-right: 15px;"
+                  id="next4" type="submit">SUBMIT</button>
+                <input type="button" name="previous" class=" previous action-button-previous" value="PREVIOUS"
+                  style="margin-right: 15px;" />
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="../js/sb-admin-2.min.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="../js/login_system/multiform.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../firebase/auth.js"></script>
+  <script src="../js/login_system/phoneverify.js"></script>
+  <script src="../firebase/login_system/register.js"></script>
+  <!-- <script src="../firebase/login_system/register.js"></script> -->
+  <script src="../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script src="../vendor/bootstrap-select-country/dist/js/bootstrap-select-country.min.js"></script>
+  <script>
+    // country code 
+    $('.countrypicker').countrypicker();
+    // modal open code
+    $(window).on('load', function () {
+      $('#myModal').modal({
+        backdrop: 'static'
+      });
+    });
+
+    // OTP hide textfield open 
+    function ShowHideDiv() {
+      var chkNo = document.getElementById("exampleRadios2");
+      var chkYes = document.getElementById("exampleRadios1");
+      var dvPassport = document.getElementById("dvPassport");
+      dvPassport.style.display = chkNo.checked ? "block" : "none";
+      if (chkYes.checked) {
+        $('#myModal').modal('hide');
+      }
+    }
+
+    // date and time and automatic Reg no generate
+    var d = new Date();
+    var t = d.getTime();
+    var reg = t;
+    reg += 1;
+    document.getElementById("regno").value = reg;
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + ' ' + time;
+    document.getElementById("date_time").value = dateTime;
+
+   // firebase push reg form 
+
+// const Regform = document.querySelector('#msform');
+//    Regform.addEventListener('submit' , (e) =>{
+//    e.preventDefault();
+
+//    const email = Regform['email'].value;
+//    const password = Regform['pwd'].value;
+//    const orgname = Regform['orgname'].value;
+//    const country = Regform['country'].value;
+//    const city = Regform['city'].value;
+//    const state = Regform['state'].value;
+//    const pincode = Regform['pincode'].value;
+//    const short = Regform['short'].value;
+//    const Address = Regform['Address'].value;
+//    const cause = Regform['cause'].value;
+//    const date_time = Regform['date_time'].value;
+//    const regno = Regform['regno'].value;
+
+//    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(response){
+//      var  userId = firebase.auth().currentUser.uid;
+//      firebase.database().ref('/admin/'+ userId +'/user/').push({
+//            orgname:orgname,
+//            country:country,
+//            city:city,
+//            state:state,
+//            pincode:pincode,
+//            short:short,
+//            Address:Address,
+//            cause:cause,
+//            regno:regno,
+//            date_time:date_time,
+//            userId : firebase.auth().currentUser.uid,
+//            email : firebase.auth().currentUser.email,      
+//    });
+
+//    // firebase.auth().signOut();
+
+
+//    const ref = firebase.storage().ref('/Profile/'+ userId + '/userprofile/');
+//        const file = document.querySelector("#pic1").files[0];
+//        const name = +new Date() + "-" + file.name;
+//          const metadata = {
+//          contentType: file.type
+//        };
+//        const task = ref.child(name).put(file, metadata);
+//        task
+//          .then(snapshot => snapshot.ref.getDownloadURL())
+//          .then(url => {
+//            firebase.database().ref('/admin/'+ userId +'/profile/').push({
+//              url:url,
+//              userId : firebase.auth().currentUser.uid,
+//            email : firebase.auth().currentUser.email,
+//    })
+//            console.log(url);
+//          //   document.querySelector("#image").src = url;
+//          })
+//      .catch(console.error);
+
+//    const ref1 = firebase.storage().ref('/Logo/'+ userId +'/userlogo/');
+//      const file1 = document.querySelector("#pic2").files[0];
+//      const name1 = +new Date() + "-" + file1.name;
+//      const metadata1 = {
+//          contentType: file1.type
+//      };
+//      const task1 = ref1.child(name1).put(file1, metadata1);
+//      task1
+//      .then(snapshot => snapshot.ref.getDownloadURL())
+//      .then(url => {
+//        firebase.database().ref('/admin/'+ userId +'/logo/').push({
+//              url:url,
+//              userId : firebase.auth().currentUser.uid,
+//            email : firebase.auth().currentUser.email,
+//    })
+//          console.log(url);
+//          //   document.querySelector("#image").src = url;
+//          })
+//      .catch(console.error);
+
+//      alert("suceesfully Register !!")
+//     // $('#loginmodal').modal('show');
+//      // window.location.href="../Dash.html";
+//    });
+//    });
+
+
+  </script>
+</body>
+
+</html>
